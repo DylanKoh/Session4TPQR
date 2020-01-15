@@ -1,0 +1,397 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Session4Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Assign_Training">
+          <Key>
+            <PropertyRef Name="trainingId" />
+          </Key>
+          <Property Name="trainingId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="moduleIdFK" Type="int" Nullable="false" />
+          <Property Name="userIdFK" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="startDate" Type="date" Nullable="false" />
+          <Property Name="progress" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Skill">
+          <Key>
+            <PropertyRef Name="skillId" />
+          </Key>
+          <Property Name="skillId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="skillName" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Training_Module">
+          <Key>
+            <PropertyRef Name="moduleId" />
+          </Key>
+          <Property Name="moduleId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="userTypeIdFK" Type="int" Nullable="false" />
+          <Property Name="skillIdFK" Type="int" Nullable="false" />
+          <Property Name="moduleName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="durationDays" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="userId" />
+          </Key>
+          <Property Name="userId" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="passwd" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="skillIdFK" Type="int" Nullable="false" />
+          <Property Name="userTypeIdFK" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="User_Type">
+          <Key>
+            <PropertyRef Name="userTypeId" />
+          </Key>
+          <Property Name="userTypeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="userTypeName" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Assign_Training_Training_Module">
+          <End Role="Training_Module" Type="Self.Training_Module" Multiplicity="1" />
+          <End Role="Assign_Training" Type="Self.Assign_Training" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Training_Module">
+              <PropertyRef Name="moduleId" />
+            </Principal>
+            <Dependent Role="Assign_Training">
+              <PropertyRef Name="moduleIdFK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Assign_Training_User1">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Assign_Training" Type="Self.Assign_Training" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="userId" />
+            </Principal>
+            <Dependent Role="Assign_Training">
+              <PropertyRef Name="userIdFK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Training_Module_Skill">
+          <End Role="Skill" Type="Self.Skill" Multiplicity="1" />
+          <End Role="Training_Module" Type="Self.Training_Module" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Skill">
+              <PropertyRef Name="skillId" />
+            </Principal>
+            <Dependent Role="Training_Module">
+              <PropertyRef Name="skillIdFK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Training_Module_User_Type">
+          <End Role="User_Type" Type="Self.User_Type" Multiplicity="1" />
+          <End Role="Training_Module" Type="Self.Training_Module" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User_Type">
+              <PropertyRef Name="userTypeId" />
+            </Principal>
+            <Dependent Role="Training_Module">
+              <PropertyRef Name="userTypeIdFK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_Skill">
+          <End Role="Skill" Type="Self.Skill" Multiplicity="1" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Skill">
+              <PropertyRef Name="skillId" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="skillIdFK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_User_Type">
+          <End Role="User_Type" Type="Self.User_Type" Multiplicity="1" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User_Type">
+              <PropertyRef Name="userTypeId" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="userTypeIdFK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Session4ModelStoreContainer">
+          <EntitySet Name="Assign_Training" EntityType="Self.Assign_Training" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Skill" EntityType="Self.Skill" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Training_Module" EntityType="Self.Training_Module" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User_Type" EntityType="Self.User_Type" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Assign_Training_Training_Module" Association="Self.FK_Assign_Training_Training_Module">
+            <End Role="Training_Module" EntitySet="Training_Module" />
+            <End Role="Assign_Training" EntitySet="Assign_Training" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Assign_Training_User1" Association="Self.FK_Assign_Training_User1">
+            <End Role="User" EntitySet="User" />
+            <End Role="Assign_Training" EntitySet="Assign_Training" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Training_Module_Skill" Association="Self.FK_Training_Module_Skill">
+            <End Role="Skill" EntitySet="Skill" />
+            <End Role="Training_Module" EntitySet="Training_Module" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Training_Module_User_Type" Association="Self.FK_Training_Module_User_Type">
+            <End Role="User_Type" EntitySet="User_Type" />
+            <End Role="Training_Module" EntitySet="Training_Module" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_Skill" Association="Self.FK_User_Skill">
+            <End Role="Skill" EntitySet="Skill" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_User_Type" Association="Self.FK_User_User_Type">
+            <End Role="User_Type" EntitySet="User_Type" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Session4Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Assign_Training">
+          <Key>
+            <PropertyRef Name="trainingId" />
+          </Key>
+          <Property Name="trainingId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="moduleIdFK" Type="Int32" Nullable="false" />
+          <Property Name="userIdFK" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="startDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="progress" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Training_Module" Relationship="Self.FK_Assign_Training_Training_Module" FromRole="Assign_Training" ToRole="Training_Module" />
+          <NavigationProperty Name="User" Relationship="Self.FK_Assign_Training_User1" FromRole="Assign_Training" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Skill">
+          <Key>
+            <PropertyRef Name="skillId" />
+          </Key>
+          <Property Name="skillId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="skillName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Training_Module" Relationship="Self.FK_Training_Module_Skill" FromRole="Skill" ToRole="Training_Module" />
+          <NavigationProperty Name="Users" Relationship="Self.FK_User_Skill" FromRole="Skill" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Training_Module">
+          <Key>
+            <PropertyRef Name="moduleId" />
+          </Key>
+          <Property Name="moduleId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="userTypeIdFK" Type="Int32" Nullable="false" />
+          <Property Name="skillIdFK" Type="Int32" Nullable="false" />
+          <Property Name="moduleName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="durationDays" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Assign_Training" Relationship="Self.FK_Assign_Training_Training_Module" FromRole="Training_Module" ToRole="Assign_Training" />
+          <NavigationProperty Name="Skill" Relationship="Self.FK_Training_Module_Skill" FromRole="Training_Module" ToRole="Skill" />
+          <NavigationProperty Name="User_Type" Relationship="Self.FK_Training_Module_User_Type" FromRole="Training_Module" ToRole="User_Type" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="userId" />
+          </Key>
+          <Property Name="userId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="passwd" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="skillIdFK" Type="Int32" Nullable="false" />
+          <Property Name="userTypeIdFK" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Assign_Training" Relationship="Self.FK_Assign_Training_User1" FromRole="User" ToRole="Assign_Training" />
+          <NavigationProperty Name="Skill" Relationship="Self.FK_User_Skill" FromRole="User" ToRole="Skill" />
+          <NavigationProperty Name="User_Type" Relationship="Self.FK_User_User_Type" FromRole="User" ToRole="User_Type" />
+        </EntityType>
+        <EntityType Name="User_Type">
+          <Key>
+            <PropertyRef Name="userTypeId" />
+          </Key>
+          <Property Name="userTypeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="userTypeName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Training_Module" Relationship="Self.FK_Training_Module_User_Type" FromRole="User_Type" ToRole="Training_Module" />
+          <NavigationProperty Name="Users" Relationship="Self.FK_User_User_Type" FromRole="User_Type" ToRole="User" />
+        </EntityType>
+        <Association Name="FK_Assign_Training_Training_Module">
+          <End Role="Training_Module" Type="Self.Training_Module" Multiplicity="1" />
+          <End Role="Assign_Training" Type="Self.Assign_Training" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Training_Module">
+              <PropertyRef Name="moduleId" />
+            </Principal>
+            <Dependent Role="Assign_Training">
+              <PropertyRef Name="moduleIdFK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Assign_Training_User1">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Assign_Training" Type="Self.Assign_Training" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="userId" />
+            </Principal>
+            <Dependent Role="Assign_Training">
+              <PropertyRef Name="userIdFK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Training_Module_Skill">
+          <End Role="Skill" Type="Self.Skill" Multiplicity="1" />
+          <End Role="Training_Module" Type="Self.Training_Module" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Skill">
+              <PropertyRef Name="skillId" />
+            </Principal>
+            <Dependent Role="Training_Module">
+              <PropertyRef Name="skillIdFK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_Skill">
+          <End Role="Skill" Type="Self.Skill" Multiplicity="1" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Skill">
+              <PropertyRef Name="skillId" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="skillIdFK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Training_Module_User_Type">
+          <End Role="User_Type" Type="Self.User_Type" Multiplicity="1" />
+          <End Role="Training_Module" Type="Self.Training_Module" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User_Type">
+              <PropertyRef Name="userTypeId" />
+            </Principal>
+            <Dependent Role="Training_Module">
+              <PropertyRef Name="userTypeIdFK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_User_Type">
+          <End Role="User_Type" Type="Self.User_Type" Multiplicity="1" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User_Type">
+              <PropertyRef Name="userTypeId" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="userTypeIdFK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Session4Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Assign_Training" EntityType="Self.Assign_Training" />
+          <EntitySet Name="Skills" EntityType="Self.Skill" />
+          <EntitySet Name="Training_Module" EntityType="Self.Training_Module" />
+          <EntitySet Name="Users" EntityType="Self.User" />
+          <EntitySet Name="User_Type" EntityType="Self.User_Type" />
+          <AssociationSet Name="FK_Assign_Training_Training_Module" Association="Self.FK_Assign_Training_Training_Module">
+            <End Role="Training_Module" EntitySet="Training_Module" />
+            <End Role="Assign_Training" EntitySet="Assign_Training" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Assign_Training_User1" Association="Self.FK_Assign_Training_User1">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Assign_Training" EntitySet="Assign_Training" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Training_Module_Skill" Association="Self.FK_Training_Module_Skill">
+            <End Role="Skill" EntitySet="Skills" />
+            <End Role="Training_Module" EntitySet="Training_Module" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_Skill" Association="Self.FK_User_Skill">
+            <End Role="Skill" EntitySet="Skills" />
+            <End Role="User" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Training_Module_User_Type" Association="Self.FK_Training_Module_User_Type">
+            <End Role="User_Type" EntitySet="User_Type" />
+            <End Role="Training_Module" EntitySet="Training_Module" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_User_Type" Association="Self.FK_User_User_Type">
+            <End Role="User_Type" EntitySet="User_Type" />
+            <End Role="User" EntitySet="Users" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Session4ModelStoreContainer" CdmEntityContainer="Session4Entities">
+          <EntitySetMapping Name="Assign_Training">
+            <EntityTypeMapping TypeName="Session4Model.Assign_Training">
+              <MappingFragment StoreEntitySet="Assign_Training">
+                <ScalarProperty Name="trainingId" ColumnName="trainingId" />
+                <ScalarProperty Name="moduleIdFK" ColumnName="moduleIdFK" />
+                <ScalarProperty Name="userIdFK" ColumnName="userIdFK" />
+                <ScalarProperty Name="startDate" ColumnName="startDate" />
+                <ScalarProperty Name="progress" ColumnName="progress" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Skills">
+            <EntityTypeMapping TypeName="Session4Model.Skill">
+              <MappingFragment StoreEntitySet="Skill">
+                <ScalarProperty Name="skillId" ColumnName="skillId" />
+                <ScalarProperty Name="skillName" ColumnName="skillName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Training_Module">
+            <EntityTypeMapping TypeName="Session4Model.Training_Module">
+              <MappingFragment StoreEntitySet="Training_Module">
+                <ScalarProperty Name="moduleId" ColumnName="moduleId" />
+                <ScalarProperty Name="userTypeIdFK" ColumnName="userTypeIdFK" />
+                <ScalarProperty Name="skillIdFK" ColumnName="skillIdFK" />
+                <ScalarProperty Name="moduleName" ColumnName="moduleName" />
+                <ScalarProperty Name="durationDays" ColumnName="durationDays" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="Session4Model.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="userId" ColumnName="userId" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="passwd" ColumnName="passwd" />
+                <ScalarProperty Name="skillIdFK" ColumnName="skillIdFK" />
+                <ScalarProperty Name="userTypeIdFK" ColumnName="userTypeIdFK" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="User_Type">
+            <EntityTypeMapping TypeName="Session4Model.User_Type">
+              <MappingFragment StoreEntitySet="User_Type">
+                <ScalarProperty Name="userTypeId" ColumnName="userTypeId" />
+                <ScalarProperty Name="userTypeName" ColumnName="userTypeName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
