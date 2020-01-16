@@ -14,6 +14,7 @@ namespace Session4
     //Initial Commit
     public partial class Login : Form
     {
+        DateTime endTime = new DateTime(2020, 07, 26, 9, 0, 0);
         public Login()
         {
             InitializeComponent();
@@ -83,7 +84,13 @@ namespace Session4
 
         private void Login_Load(object sender, EventArgs e)
         {
-            countdownTime.Text = (DateTime.Parse("29 Jul 2020, 9am") - DateTime.Now).TotalDays.ToString() + " days "+ (DateTime.Parse("29 Jul 2020, 9am") - DateTime.Now).TotalHours.ToString() + "Hrs";
+            
+            Timer t = new Timer();
+            t.Interval = 500;
+            t.Tick += new EventHandler(timer1_Tick);
+            TimeSpan ts = endTime.Subtract(DateTime.Now);
+            countdownTime.Text = ts.ToString("d' Days 'h' Hours 'm' Minutes 's' Seconds'");
+            t.Start(); ;
         }
 
         private void uploadBtn_Click(object sender, EventArgs e)
@@ -94,17 +101,30 @@ namespace Session4
                 using (var context = new Session4Entities())
                 {
                     var values = lines[i].Split(',');
-                    context.Users.Add(new User()
+                    var checkIfExist = (from x in context.Users
+                                        where x.userId == values[0]
+                                        select x).FirstOrDefault();
+                    if (checkIfExist == null)
                     {
-                        userId = values[0],
-                        skillIdFK = Int32.Parse(values[1]),
-                        passwd = values[2],
-                        name = values[3],
-                        userTypeIdFK = Int32.Parse(values[4])
-                    });
-                    context.SaveChanges();
+                        context.Users.Add(new User()
+                        {
+                            userId = values[0],
+                            skillIdFK = Int32.Parse(values[1]),
+                            passwd = values[2],
+                            name = values[3],
+                            userTypeIdFK = Int32.Parse(values[4])
+                        });
+                        context.SaveChanges();
+                    }
+                    
                 }
             }
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            TimeSpan ts = endTime.Subtract(DateTime.Now);
+            countdownTime.Text = ts.ToString("d' Days 'h' Hours 'm' Minutes 's' Seconds'");
         }
     }
 }
