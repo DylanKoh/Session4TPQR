@@ -77,11 +77,11 @@
     <Compile Include="CompetitorTrainingProgress.Designer.cs">
       <DependentUpon>CompetitorTrainingProgress.cs</DependentUpon>
     </Compile>
-    <Compile Include="ExpertMain.cs">
+    <Compile Include="4.3_ExpertMain.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ExpertMain.Designer.cs">
-      <DependentUpon>ExpertMain.cs</DependentUpon>
+    <Compile Include="4.3_ExpertMain.Designer.cs">
+      <DependentUpon>4.3_ExpertMain.cs</DependentUpon>
     </Compile>
     <Compile Include="4.1_Login.cs">
       <SubType>Form</SubType>
@@ -145,8 +145,8 @@
     <EmbeddedResource Include="CompetitorTrainingProgress.resx">
       <DependentUpon>CompetitorTrainingProgress.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ExpertMain.resx">
-      <DependentUpon>ExpertMain.cs</DependentUpon>
+    <EmbeddedResource Include="4.3_ExpertMain.resx">
+      <DependentUpon>4.3_ExpertMain.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="4.1_Login.resx">
       <DependentUpon>4.1_Login.cs</DependentUpon>
