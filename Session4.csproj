@@ -62,11 +62,11 @@
     <Compile Include="4.2_AdminMain.Designer.cs">
       <DependentUpon>4.2_AdminMain.cs</DependentUpon>
     </Compile>
-    <Compile Include="AssignTraining.cs">
+    <Compile Include="4.4_AssignTraining.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="AssignTraining.Designer.cs">
-      <DependentUpon>AssignTraining.cs</DependentUpon>
+    <Compile Include="4.4_AssignTraining.Designer.cs">
+      <DependentUpon>4.4_AssignTraining.cs</DependentUpon>
     </Compile>
     <Compile Include="Assign_Training.cs">
       <DependentUpon>Session4Model.tt</DependentUpon>
@@ -139,8 +139,8 @@
     <EmbeddedResource Include="4.2_AdminMain.resx">
       <DependentUpon>4.2_AdminMain.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="AssignTraining.resx">
-      <DependentUpon>AssignTraining.cs</DependentUpon>
+    <EmbeddedResource Include="4.4_AssignTraining.resx">
+      <DependentUpon>4.4_AssignTraining.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="CompetitorTrainingProgress.resx">
       <DependentUpon>CompetitorTrainingProgress.cs</DependentUpon>
@@ -191,19 +191,19 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
     <Content Include="Session4Model.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>Session4Model.Context.cs</LastGenOutput>
       <DependentUpon>Session4Model.edmx</DependentUpon>
+      <LastGenOutput>Session4Model.Context.cs</LastGenOutput>
     </Content>
     <Content Include="Session4Model.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>Session4Model.edmx</DependentUpon>
       <LastGenOutput>Session4Model.cs</LastGenOutput>
     </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -46,23 +46,12 @@ namespace Session4
                 }
                 categoryBox.Items.AddRange(category.ToArray());
                 GridRefresh();
-                if (dataGridView1.Rows.Count > 0)
-                {
-                    foreach (DataGridViewRow rows in dataGridView1.Rows)
-                    {
-                        var i = Convert.ToInt32(rows.Cells[3].Value);
-                        var getAssignment = (from x in context.Assign_Training
-                                             where x.trainingId == i
-                                             select x).FirstOrDefault();
-                        context.Assign_Training.Remove(getAssignment);
-                        context.SaveChanges();
-                    }
-                }
+                
 
 
             }
-            
-            
+
+
         }
 
         private void backBtn_Click(object sender, EventArgs e)
@@ -74,7 +63,7 @@ namespace Session4
 
         private void moduleBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            
+
 
         }
         private void GridRefresh()
@@ -83,7 +72,7 @@ namespace Session4
             dataGridView1.Columns[0].Name = "Skill";
             dataGridView1.Columns[1].Name = "Training Category";
             dataGridView1.Columns[2].Name = "Training Module";
-            dataGridView1.Columns[3].Name = "Assigned ID";
+            dataGridView1.Columns[3].Name = "Module ID";
             dataGridView1.Columns[4].Name = "Date";
             dataGridView1.Columns[3].Visible = false;
             dataGridView1.Columns[4].Visible = false;
@@ -91,12 +80,15 @@ namespace Session4
             {
                 var getTraining = (from x in context.Assign_Training
                                    select x);
-                foreach (var item in getTraining)
+                foreach (var item in getTraining.Select(x => x.moduleIdFK).Distinct())
                 {
+                    var getDetails = (from x in context.Assign_Training
+                                      where x.moduleIdFK == item
+                                      select x).FirstOrDefault();
                     List<string> rows = new List<string>()
                     {
-                        item.Training_Module.Skill.skillName, item.Training_Module.User_Type.userTypeName, item.Training_Module.moduleName,
-                        item.trainingId.ToString()
+                        getDetails.Training_Module.Skill.skillName, getDetails.Training_Module.User_Type.userTypeName, getDetails.Training_Module.moduleName,
+                        item.ToString()
                     };
                     dataGridView1.Rows.Add(rows.ToArray());
                 }
@@ -121,12 +113,26 @@ namespace Session4
                     HashSet<string> module = new HashSet<string>();
                     var getModule = (from x in context.Training_Module
                                      where x.skillIdFK == getSkillID && x.userTypeIdFK == getTypeID
-                                     select x.moduleName);
+                                     select x);
                     foreach (var item in getModule)
                     {
-                        module.Add(item);
+                        var checkTraining = (from x in context.Assign_Training
+                                             where x.moduleIdFK == item.moduleId
+                                             select x).FirstOrDefault();
+                        if (checkTraining == null)
+                            module.Add(item.moduleName);
+                        else continue;
                     }
                     moduleBox.Items.AddRange(module.ToArray());
+
+                    foreach (DataGridViewRow item in dataGridView1.Rows)
+                    {
+                        var moduleID = Convert.ToInt32(item.Cells[3].Value);
+                        var checkModules = (from x in context.Training_Module
+                                            where x.moduleId == moduleID
+                                            select x.moduleName).FirstOrDefault();
+                        moduleBox.Items.Remove(checkModules);
+                    }
                 }
                 else
                 {
@@ -143,58 +149,29 @@ namespace Session4
                 var checkDuration = (from x in context.Training_Module
                                      where x.moduleName == moduleBox.SelectedItem.ToString()
                                      select x.durationDays).First();
-                if (dateTimePicker1.Value > DateTime.Parse("29/7/2020"))
+                if (dateTimePicker1.Value > DateTime.Parse("26/7/2020") || dateTimePicker1.Value.AddDays(checkDuration) >= DateTime.Parse("26/7/2020"))
                 {
-                    MessageBox.Show("Cannot add if start date is after competition!");
+                    MessageBox.Show("Cannot add if start date is after competition or duration will run into competition date!", "Invalid start date",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
 
                 }
                 else
                 {
-                    var getLatest = (from x in context.Assign_Training
-                                       orderby x.trainingId descending
-                                       select x).FirstOrDefault();
-                    if (getLatest != null)
-                    {
-                        var getLatestID = (from x in context.Assign_Training
-                                           orderby x.trainingId descending
-                                           select x.trainingId).FirstOrDefault() + 1;
-                        List<string> newRow = new List<string>()
+                    var getID = (from x in context.Training_Module
+                                 where x.moduleName == moduleBox.SelectedItem.ToString()
+                                 select x.moduleId).FirstOrDefault();
+
+                    List<string> newRow = new List<string>()
                         {
-                        skillBox.SelectedItem.ToString(), categoryBox.SelectedItem.ToString(), moduleBox.SelectedItem.ToString(),
-                        getLatestID.ToString(), dateTimePicker1.Value.ToString()
-                        };
-                        dataGridView1.Rows.Add(newRow.ToArray());
-                    }
-                    else
-                    {
-                        if (dataGridView1.Rows.Count == 0)
-                        {
-                            List<string> newRow = new List<string>()
-                        {
-                        skillBox.SelectedItem.ToString(), categoryBox.SelectedItem.ToString(), moduleBox.SelectedItem.ToString(),
-                        1.ToString(), dateTimePicker1.Value.ToString()
-                        };
-                            dataGridView1.Rows.Add(newRow.ToArray());
-                        }
-                        else
-                        {
-                            List<int> id = new List<int>();
-                            foreach (DataGridViewRow rows in dataGridView1.Rows)
-                            {
-                                id.Add(Convert.ToInt32(rows.Cells[3].Value));
-                            }
-                            var newID = id.Max() + 1;
-                            List<string> newRow = new List<string>()
-                            {
                             skillBox.SelectedItem.ToString(), categoryBox.SelectedItem.ToString(), moduleBox.SelectedItem.ToString(),
-                                newID.ToString(), dateTimePicker1.Value.ToString()
+                            getID.ToString(), dateTimePicker1.Value.ToString()
                         };
-                            dataGridView1.Rows.Add(newRow.ToArray());
-                        }
-                        
-                    }
-                    
-                    
+                    dataGridView1.Rows.Add(newRow.ToArray());
+                    moduleBox.Items.Remove(moduleBox.SelectedItem);
+
+
+
+
                 }
             }
         }
@@ -207,13 +184,14 @@ namespace Session4
             }
             else
             {
+                moduleBox.Items.Add(dataGridView1.Rows[dataGridView1.CurrentRow.Index].Cells[2].Value);
                 dataGridView1.Rows.RemoveAt(dataGridView1.CurrentRow.Index);
             }
         }
 
         private void assignBtn_Click(object sender, EventArgs e)
         {
-            using (var context  = new Session4Entities())
+            using (var context = new Session4Entities())
             {
                 foreach (DataGridViewRow rows in dataGridView1.Rows)
                 {
@@ -221,36 +199,45 @@ namespace Session4
                     var getSkillID = (from x in context.Skills
                                       where x.skillName == skillName
                                       select x.skillId).First();
+
                     var categoryName = rows.Cells[1].Value.ToString();
                     var getCategoryID = (from x in context.User_Type
                                          where x.userTypeName == categoryName
                                          select x.userTypeId).First();
-                    var moduleName = rows.Cells[2].Value.ToString();
-                    var getModuleID = (from x in context.Training_Module
-                                       where x.moduleName == moduleName
-                                       select x.moduleId).First();
+
+
                     var getAllID = (from x in context.Users
                                     where x.User_Type.userTypeName == categoryName && x.Skill.skillName == skillName
-                                    select x.userId);
-                    foreach (var item in getAllID)
+                                    select x.userId).ToList();
+                    var ID = Convert.ToInt32(rows.Cells[3].Value);
+                    var checkIfIDExist = (from x in context.Assign_Training
+                                          where x.moduleIdFK == ID
+                                          select x).FirstOrDefault();
+                    if (checkIfIDExist == null)
                     {
-                        context.Assign_Training.Add(new Assign_Training()
+                        foreach (var item in getAllID)
                         {
-                            startDate = Convert.ToDateTime(rows.Cells[4].Value),
-                            progress = 0,
-                            trainingId = Convert.ToInt32(rows.Cells[3].Value),
-                            userIdFK = item,
-                            moduleIdFK = getModuleID
-
-                        });
+                            context.Assign_Training.Add(new Assign_Training()
+                            {
+                                startDate = Convert.ToDateTime(rows.Cells[4].Value),
+                                progress = 0,
+                                userIdFK = item,
+                                moduleIdFK = Convert.ToInt32(rows.Cells[3].Value)
+                            });
+                            context.SaveChanges();
+                        }
                     }
-                    
+                    else
+                    {
+                        continue;
+                    }
+
                 }
-                context.SaveChanges();
-                this.Hide();
-                (new AdminMain(_userID)).ShowDialog();
-                this.Close();
+
             }
+            this.Hide();
+            (new AdminMain(_userID)).ShowDialog();
+            this.Close();
         }
     }
 }
