@@ -230,7 +230,7 @@ namespace Session4
                 statusCompetitorsList.Rows.Add(row2StatusCompetitor.ToArray());
                 statusCompetitorsList.Rows.Add(row3StatusCompetitor.ToArray());
                 #endregion
-
+                chart1.ChartAreas[0].AxisY.Title = "Number of Competitors";
                 #region Load Chart
                 foreach (DataGridViewRow rows in statusCompetitorsList.Rows)
                 {
@@ -240,6 +240,7 @@ namespace Session4
                         if (columns.Index == 0) continue;
                         var point = statusCompetitorsList.Rows[rows.Index].Cells[columns.Index].Value;
                         chart1.Series[$"{rows.Cells[0].Value.ToString()}"].Points.AddXY(columns.HeaderText, point);
+                        
                     }
                 }
                 #endregion
