@@ -71,11 +71,11 @@
     <Compile Include="Assign_Training.cs">
       <DependentUpon>Session4Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="CompetitorTrainingProgress.cs">
+    <Compile Include="4.8_CompetitorTrainingProgress.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="CompetitorTrainingProgress.Designer.cs">
-      <DependentUpon>CompetitorTrainingProgress.cs</DependentUpon>
+    <Compile Include="4.8_CompetitorTrainingProgress.Designer.cs">
+      <DependentUpon>4.8_CompetitorTrainingProgress.cs</DependentUpon>
     </Compile>
     <Compile Include="4.3_ExpertMain.cs">
       <SubType>Form</SubType>
@@ -142,8 +142,8 @@
     <EmbeddedResource Include="4.4_AssignTraining.resx">
       <DependentUpon>4.4_AssignTraining.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="CompetitorTrainingProgress.resx">
-      <DependentUpon>CompetitorTrainingProgress.cs</DependentUpon>
+    <EmbeddedResource Include="4.8_CompetitorTrainingProgress.resx">
+      <DependentUpon>4.8_CompetitorTrainingProgress.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="4.3_ExpertMain.resx">
       <DependentUpon>4.3_ExpertMain.cs</DependentUpon>
