@@ -124,11 +124,11 @@
     <Compile Include="4.6_UpdateCompetitors.Designer.cs">
       <DependentUpon>4.6_UpdateCompetitors.cs</DependentUpon>
     </Compile>
-    <Compile Include="UpdateExpertRecords.cs">
+    <Compile Include="4.7_UpdateExpertRecords.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UpdateExpertRecords.Designer.cs">
-      <DependentUpon>UpdateExpertRecords.cs</DependentUpon>
+    <Compile Include="4.7_UpdateExpertRecords.Designer.cs">
+      <DependentUpon>4.7_UpdateExpertRecords.cs</DependentUpon>
     </Compile>
     <Compile Include="User.cs">
       <DependentUpon>Session4Model.tt</DependentUpon>
@@ -166,8 +166,8 @@
     <EmbeddedResource Include="4.6_UpdateCompetitors.resx">
       <DependentUpon>4.6_UpdateCompetitors.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UpdateExpertRecords.resx">
-      <DependentUpon>UpdateExpertRecords.cs</DependentUpon>
+    <EmbeddedResource Include="4.7_UpdateExpertRecords.resx">
+      <DependentUpon>4.7_UpdateExpertRecords.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">

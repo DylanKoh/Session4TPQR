@@ -46,7 +46,7 @@ namespace Session4
                 }
                 categoryBox.Items.AddRange(category.ToArray());
                 GridRefresh();
-                
+
 
 
             }
@@ -184,8 +184,27 @@ namespace Session4
             }
             else
             {
-                moduleBox.Items.Add(dataGridView1.Rows[dataGridView1.CurrentRow.Index].Cells[2].Value);
-                dataGridView1.Rows.RemoveAt(dataGridView1.CurrentRow.Index);
+                using (var context = new Session4Entities())
+                {
+                    var moduleID = Convert.ToInt32(dataGridView1.CurrentRow.Cells[3].Value);
+                    var getTrainingsCheck = (from x in context.Assign_Training
+                                             where x.moduleIdFK == moduleID
+                                             select x).FirstOrDefault();
+                    if (getTrainingsCheck != null)
+                    {
+                        var getTrainings = (from x in context.Assign_Training
+                                            where x.moduleIdFK == moduleID
+                                            select x).ToList();
+                        foreach (var item in getTrainings)
+                        {
+                            context.Assign_Training.Remove(item);
+                            context.SaveChanges();
+                        }
+                    }
+                    moduleBox.Items.Add(dataGridView1.Rows[dataGridView1.CurrentRow.Index].Cells[2].Value);
+                    dataGridView1.Rows.RemoveAt(dataGridView1.CurrentRow.Index);
+                }
+
             }
         }
 

@@ -144,6 +144,7 @@
             this.nameBtn.TabStop = true;
             this.nameBtn.Text = "Name";
             this.nameBtn.UseVisualStyleBackColor = true;
+            this.nameBtn.CheckedChanged += new System.EventHandler(this.nameBtn_CheckedChanged);
             // 
             // progressBtn
             // 
@@ -155,9 +156,14 @@
             this.progressBtn.TabStop = true;
             this.progressBtn.Text = "Progress";
             this.progressBtn.UseVisualStyleBackColor = true;
+            this.progressBtn.CheckedChanged += new System.EventHandler(this.progressBtn_CheckedChanged);
             // 
             // dataGridView1
             // 
+            this.dataGridView1.AllowUserToAddRows = false;
+            this.dataGridView1.AllowUserToDeleteRows = false;
+            this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
+            this.dataGridView1.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Location = new System.Drawing.Point(12, 346);
             this.dataGridView1.Name = "dataGridView1";
@@ -165,6 +171,7 @@
             this.dataGridView1.RowTemplate.Height = 24;
             this.dataGridView1.Size = new System.Drawing.Size(1066, 268);
             this.dataGridView1.TabIndex = 12;
+            this.dataGridView1.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellValueChanged);
             // 
             // updateBtn
             // 
@@ -174,6 +181,7 @@
             this.updateBtn.TabIndex = 13;
             this.updateBtn.Text = "Update";
             this.updateBtn.UseVisualStyleBackColor = true;
+            this.updateBtn.Click += new System.EventHandler(this.updateBtn_Click);
             // 
             // UpdateExpertRecords
             // 
