@@ -28,9 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.panel1 = new System.Windows.Forms.Panel();
             this.backBtn = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
@@ -56,12 +56,12 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1095, 100);
+            this.panel1.Size = new System.Drawing.Size(1095, 74);
             this.panel1.TabIndex = 3;
             // 
             // backBtn
             // 
-            this.backBtn.Location = new System.Drawing.Point(12, 28);
+            this.backBtn.Location = new System.Drawing.Point(12, 20);
             this.backBtn.Name = "backBtn";
             this.backBtn.Size = new System.Drawing.Size(115, 44);
             this.backBtn.TabIndex = 1;
@@ -74,7 +74,7 @@
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Verdana", 16F);
             this.label1.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.label1.Location = new System.Drawing.Point(823, 32);
+            this.label1.Location = new System.Drawing.Point(829, 24);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(263, 32);
             this.label1.TabIndex = 0;
@@ -84,7 +84,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Verdana", 16F);
-            this.label2.Location = new System.Drawing.Point(344, 103);
+            this.label2.Location = new System.Drawing.Point(357, 77);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(436, 32);
             this.label2.TabIndex = 4;
@@ -93,7 +93,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(358, 166);
+            this.label3.Location = new System.Drawing.Point(357, 115);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(72, 25);
             this.label3.TabIndex = 5;
@@ -103,7 +103,7 @@
             // 
             this.skillBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.skillBox.FormattingEnabled = true;
-            this.skillBox.Location = new System.Drawing.Point(436, 163);
+            this.skillBox.Location = new System.Drawing.Point(435, 112);
             this.skillBox.Name = "skillBox";
             this.skillBox.Size = new System.Drawing.Size(261, 33);
             this.skillBox.TabIndex = 6;
@@ -111,19 +111,26 @@
             // 
             // NumberList
             // 
+            this.NumberList.AllowUserToAddRows = false;
+            this.NumberList.AllowUserToDeleteRows = false;
+            this.NumberList.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.NumberList.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.NumberList.Location = new System.Drawing.Point(12, 202);
+            this.NumberList.Location = new System.Drawing.Point(11, 151);
             this.NumberList.Name = "NumberList";
+            this.NumberList.ReadOnly = true;
             this.NumberList.RowHeadersWidth = 51;
             this.NumberList.RowTemplate.Height = 24;
-            this.NumberList.Size = new System.Drawing.Size(1071, 141);
+            this.NumberList.Size = new System.Drawing.Size(1071, 110);
             this.NumberList.TabIndex = 7;
             // 
             // statusExpertList
             // 
+            this.statusExpertList.AllowUserToAddRows = false;
+            this.statusExpertList.AllowUserToDeleteRows = false;
             this.statusExpertList.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.statusExpertList.Location = new System.Drawing.Point(12, 370);
+            this.statusExpertList.Location = new System.Drawing.Point(12, 267);
             this.statusExpertList.Name = "statusExpertList";
+            this.statusExpertList.ReadOnly = true;
             this.statusExpertList.RowHeadersWidth = 51;
             this.statusExpertList.RowTemplate.Height = 24;
             this.statusExpertList.Size = new System.Drawing.Size(514, 214);
@@ -132,8 +139,9 @@
             // statusCompetitorsList
             // 
             this.statusCompetitorsList.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.statusCompetitorsList.Location = new System.Drawing.Point(569, 370);
+            this.statusCompetitorsList.Location = new System.Drawing.Point(569, 267);
             this.statusCompetitorsList.Name = "statusCompetitorsList";
+            this.statusCompetitorsList.ReadOnly = true;
             this.statusCompetitorsList.RowHeadersWidth = 51;
             this.statusCompetitorsList.RowTemplate.Height = 24;
             this.statusCompetitorsList.Size = new System.Drawing.Size(514, 214);
@@ -141,16 +149,16 @@
             // 
             // chart1
             // 
-            chartArea3.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea3);
-            legend3.Name = "Legend1";
-            this.chart1.Legends.Add(legend3);
-            this.chart1.Location = new System.Drawing.Point(206, 592);
+            chartArea2.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea2);
+            legend2.Name = "Legend1";
+            this.chart1.Legends.Add(legend2);
+            this.chart1.Location = new System.Drawing.Point(203, 487);
             this.chart1.Name = "chart1";
-            series3.ChartArea = "ChartArea1";
-            series3.Legend = "Legend1";
-            series3.Name = "Series1";
-            this.chart1.Series.Add(series3);
+            series2.ChartArea = "ChartArea1";
+            series2.Legend = "Legend1";
+            series2.Name = "Series1";
+            this.chart1.Series.Add(series2);
             this.chart1.Size = new System.Drawing.Size(688, 300);
             this.chart1.TabIndex = 10;
             this.chart1.Text = "chart1";
@@ -159,7 +167,8 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(13F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1095, 904);
+            this.AutoSize = true;
+            this.ClientSize = new System.Drawing.Size(1095, 812);
             this.Controls.Add(this.chart1);
             this.Controls.Add(this.statusCompetitorsList);
             this.Controls.Add(this.statusExpertList);

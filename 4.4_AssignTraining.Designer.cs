@@ -141,6 +141,7 @@
             this.skillBox.Name = "skillBox";
             this.skillBox.Size = new System.Drawing.Size(275, 33);
             this.skillBox.TabIndex = 9;
+            this.skillBox.SelectedIndexChanged += new System.EventHandler(this.skillBox_SelectedIndexChanged);
             // 
             // categoryBox
             // 
@@ -150,6 +151,7 @@
             this.categoryBox.Name = "categoryBox";
             this.categoryBox.Size = new System.Drawing.Size(275, 33);
             this.categoryBox.TabIndex = 10;
+            this.categoryBox.SelectedIndexChanged += new System.EventHandler(this.categoryBox_SelectedIndexChanged);
             // 
             // moduleBox
             // 

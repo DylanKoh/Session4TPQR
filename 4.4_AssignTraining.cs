@@ -239,5 +239,15 @@ namespace Session4
             (new AdminMain(_userID)).ShowDialog();
             this.Close();
         }
+
+        private void skillBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            moduleBox.Items.Clear();
+        }
+
+        private void categoryBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            moduleBox.Items.Clear();
+        }
     }
 }

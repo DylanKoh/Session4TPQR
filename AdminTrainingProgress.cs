@@ -46,6 +46,7 @@ namespace Session4
             NumberList.Rows.Clear();
             statusExpertList.Rows.Clear();
             statusCompetitorsList.Rows.Clear();
+            NumberList.Columns.Clear();
             GridRefresh();
         }
         private void GridRefresh()
@@ -56,13 +57,14 @@ namespace Session4
             using (var context = new Session4Entities())
             {
                 var getTrainingStart = (from x in context.Assign_Training
+                                        where x.User.Skill.skillName == skillBox.SelectedItem.ToString()
                                         orderby x.startDate ascending
                                         select x.startDate).ToList();
                 var getDistinctDates = (from x in getTrainingStart
                                         select x.ToString("MM/yyyy")).Distinct();
                 foreach (var item in getDistinctDates)
                 {
-                    NumberList.Columns.Add(item, item);
+                    NumberList.Columns.Add($"No. of training started on {item}", $"No. of training started on {item}");
                 }
 
                 var getCategory = (from x in context.User_Type
@@ -87,17 +89,17 @@ namespace Session4
                                         select x).ToList();
 
                     var getStartedTraining1 = (from x in initialQuery
-                                               where x.startDate.ToString("MM/yyyy").Equals(dates) && x.User.User_Type.userTypeName == "Competitor"
+                                               where x.startDate.ToString("MM/yyyy").Equals(dates) && x.User.User_Type.userTypeName == "Competitor" && x.User.Skill.skillName == skillBox.SelectedItem.ToString()
                                                select x).Count();
 
                     var getStartedTraining2 = (from x in initialQuery
-                                               where x.startDate.ToString("MM/yyyy").Equals(dates) && x.User.User_Type.userTypeName == "Expert"
+                                               where x.startDate.ToString("MM/yyyy").Equals(dates) && x.User.User_Type.userTypeName == "Expert" && x.User.Skill.skillName == skillBox.SelectedItem.ToString()
                                                select x).Count();
                     row1.Add(getStartedTraining1.ToString());
                     row2.Add(getStartedTraining2.ToString());
                 }
-                NumberList.Rows.Add(row1);
-                NumberList.Rows.Add(row2);
+                NumberList.Rows.Add(row1.ToArray());
+                NumberList.Rows.Add(row2.ToArray());
             }
         }
     }
