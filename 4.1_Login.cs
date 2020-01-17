@@ -101,8 +101,9 @@ namespace Session4
                 using (var context = new Session4Entities())
                 {
                     var values = lines[i].Split(',');
+                    var id = values[0];
                     var checkIfExist = (from x in context.Users
-                                        where x.userId == values[0]
+                                        where x.userId == id
                                         select x).FirstOrDefault();
                     if (checkIfExist == null)
                     {

@@ -28,9 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
             this.panel1 = new System.Windows.Forms.Panel();
             this.backBtn = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
@@ -127,8 +126,9 @@
             // 
             this.statusExpertList.AllowUserToAddRows = false;
             this.statusExpertList.AllowUserToDeleteRows = false;
+            this.statusExpertList.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.statusExpertList.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.statusExpertList.Location = new System.Drawing.Point(12, 267);
+            this.statusExpertList.Location = new System.Drawing.Point(11, 267);
             this.statusExpertList.Name = "statusExpertList";
             this.statusExpertList.ReadOnly = true;
             this.statusExpertList.RowHeadersWidth = 51;
@@ -138,6 +138,9 @@
             // 
             // statusCompetitorsList
             // 
+            this.statusCompetitorsList.AllowUserToAddRows = false;
+            this.statusCompetitorsList.AllowUserToDeleteRows = false;
+            this.statusCompetitorsList.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.statusCompetitorsList.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.statusCompetitorsList.Location = new System.Drawing.Point(569, 267);
             this.statusCompetitorsList.Name = "statusCompetitorsList";
@@ -149,16 +152,12 @@
             // 
             // chart1
             // 
-            chartArea2.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea2);
-            legend2.Name = "Legend1";
-            this.chart1.Legends.Add(legend2);
+            chartArea1.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea1);
+            legend1.Name = "Legend1";
+            this.chart1.Legends.Add(legend1);
             this.chart1.Location = new System.Drawing.Point(203, 487);
             this.chart1.Name = "chart1";
-            series2.ChartArea = "ChartArea1";
-            series2.Legend = "Legend1";
-            series2.Name = "Series1";
-            this.chart1.Series.Add(series2);
             this.chart1.Size = new System.Drawing.Size(688, 300);
             this.chart1.TabIndex = 10;
             this.chart1.Text = "chart1";

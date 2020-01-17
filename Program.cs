@@ -16,7 +16,7 @@ namespace Session4
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new AdminTrainingProgress("qwer1234"));
+            Application.Run(new Login());
         }
     }
 }
