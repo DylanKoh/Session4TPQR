@@ -45,6 +45,7 @@
             this.progressBox = new System.Windows.Forms.ComboBox();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.updateBtn = new System.Windows.Forms.Button();
+            this.defaultBtn = new System.Windows.Forms.RadioButton();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
@@ -144,6 +145,7 @@
             this.skillBox.Name = "skillBox";
             this.skillBox.Size = new System.Drawing.Size(433, 33);
             this.skillBox.TabIndex = 9;
+            this.skillBox.SelectedIndexChanged += new System.EventHandler(this.skillBox_SelectedIndexChanged);
             // 
             // competitorBox
             // 
@@ -159,7 +161,7 @@
             // nameBtn
             // 
             this.nameBtn.AutoSize = true;
-            this.nameBtn.Location = new System.Drawing.Point(331, 271);
+            this.nameBtn.Location = new System.Drawing.Point(443, 271);
             this.nameBtn.Name = "nameBtn";
             this.nameBtn.Size = new System.Drawing.Size(91, 29);
             this.nameBtn.TabIndex = 11;
@@ -171,7 +173,7 @@
             // endDateBtn
             // 
             this.endDateBtn.AutoSize = true;
-            this.endDateBtn.Location = new System.Drawing.Point(428, 271);
+            this.endDateBtn.Location = new System.Drawing.Point(540, 271);
             this.endDateBtn.Name = "endDateBtn";
             this.endDateBtn.Size = new System.Drawing.Size(125, 29);
             this.endDateBtn.TabIndex = 12;
@@ -186,6 +188,7 @@
             this.moduleNameBox.Name = "moduleNameBox";
             this.moduleNameBox.Size = new System.Drawing.Size(433, 32);
             this.moduleNameBox.TabIndex = 13;
+            this.moduleNameBox.TextChanged += new System.EventHandler(this.moduleNameBox_TextChanged);
             // 
             // progressBox
             // 
@@ -195,9 +198,14 @@
             this.progressBox.Name = "progressBox";
             this.progressBox.Size = new System.Drawing.Size(433, 33);
             this.progressBox.TabIndex = 14;
+            this.progressBox.SelectedIndexChanged += new System.EventHandler(this.progressBox_SelectedIndexChanged);
             // 
             // dataGridView1
             // 
+            this.dataGridView1.AllowUserToAddRows = false;
+            this.dataGridView1.AllowUserToDeleteRows = false;
+            this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
+            this.dataGridView1.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Location = new System.Drawing.Point(12, 440);
             this.dataGridView1.Name = "dataGridView1";
@@ -205,6 +213,7 @@
             this.dataGridView1.RowTemplate.Height = 24;
             this.dataGridView1.Size = new System.Drawing.Size(1072, 202);
             this.dataGridView1.TabIndex = 15;
+            this.dataGridView1.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellValueChanged);
             // 
             // updateBtn
             // 
@@ -214,12 +223,26 @@
             this.updateBtn.TabIndex = 16;
             this.updateBtn.Text = "Update";
             this.updateBtn.UseVisualStyleBackColor = true;
+            this.updateBtn.Click += new System.EventHandler(this.updateBtn_Click);
+            // 
+            // defaultBtn
+            // 
+            this.defaultBtn.AutoSize = true;
+            this.defaultBtn.Location = new System.Drawing.Point(331, 271);
+            this.defaultBtn.Name = "defaultBtn";
+            this.defaultBtn.Size = new System.Drawing.Size(106, 29);
+            this.defaultBtn.TabIndex = 17;
+            this.defaultBtn.TabStop = true;
+            this.defaultBtn.Text = "Default";
+            this.defaultBtn.UseVisualStyleBackColor = true;
+            this.defaultBtn.CheckedChanged += new System.EventHandler(this.defaultBtn_CheckedChanged);
             // 
             // UpdateCompetitors
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(13F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1096, 697);
+            this.Controls.Add(this.defaultBtn);
             this.Controls.Add(this.updateBtn);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.progressBox);
@@ -267,5 +290,6 @@
         private System.Windows.Forms.ComboBox progressBox;
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.Button updateBtn;
+        private System.Windows.Forms.RadioButton defaultBtn;
     }
 }

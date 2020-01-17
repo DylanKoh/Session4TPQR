@@ -118,11 +118,11 @@
     <Compile Include="Training_Module.cs">
       <DependentUpon>Session4Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="UpdateCompetitors.cs">
+    <Compile Include="4.6_UpdateCompetitors.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UpdateCompetitors.Designer.cs">
-      <DependentUpon>UpdateCompetitors.cs</DependentUpon>
+    <Compile Include="4.6_UpdateCompetitors.Designer.cs">
+      <DependentUpon>4.6_UpdateCompetitors.cs</DependentUpon>
     </Compile>
     <Compile Include="UpdateExpertRecords.cs">
       <SubType>Form</SubType>
@@ -163,8 +163,8 @@
     <EmbeddedResource Include="4.5_AdminTrainingProgress.resx">
       <DependentUpon>4.5_AdminTrainingProgress.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UpdateCompetitors.resx">
-      <DependentUpon>UpdateCompetitors.cs</DependentUpon>
+    <EmbeddedResource Include="4.6_UpdateCompetitors.resx">
+      <DependentUpon>4.6_UpdateCompetitors.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UpdateExpertRecords.resx">
       <DependentUpon>UpdateExpertRecords.cs</DependentUpon>
