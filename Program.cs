@@ -16,7 +16,7 @@ namespace Session4
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new UpdateCompetitors());
+            Application.Run(new UpdateExpertRecords("aaaa1111"));
         }
     }
 }

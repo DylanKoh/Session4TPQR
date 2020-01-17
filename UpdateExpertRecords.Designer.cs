@@ -122,6 +122,8 @@
             this.expertNameBox.Name = "expertNameBox";
             this.expertNameBox.Size = new System.Drawing.Size(393, 33);
             this.expertNameBox.TabIndex = 8;
+            this.expertNameBox.SelectedIndexChanged += new System.EventHandler(this.expertNameBox_SelectedIndexChanged);
+            this.expertNameBox.Click += new System.EventHandler(this.expertNameBox_Click);
             // 
             // label5
             // 
@@ -193,6 +195,7 @@
             this.Margin = new System.Windows.Forms.Padding(5);
             this.Name = "UpdateExpertRecords";
             this.Text = "UpdateExpertRecords";
+            this.Load += new System.EventHandler(this.UpdateExpertRecords_Load);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
