@@ -26,7 +26,8 @@ namespace Session4
             {
                 if (userIDBox.Text.Trim() == "" || passwordBox.Text.Trim() == "")
                 {
-                    MessageBox.Show("Please check your login details!", "Empty Field(s)");
+                    MessageBox.Show("Please check your login details!", "Empty Field(s)", MessageBoxButtons.OK,
+                        MessageBoxIcon.Error);
                 }
                 else
                 {
@@ -35,15 +36,17 @@ namespace Session4
                                    select x).FirstOrDefault();
                     if (getUser == null)
                     {
-                        MessageBox.Show("User does not exist!");
+                        MessageBox.Show("User does not exist!", "Invalid Login credentials",MessageBoxButtons.OK,
+                        MessageBoxIcon.Error);
                     }
                     else if (getUser.passwd != passwordBox.Text)
                     {
-                        MessageBox.Show("Password is wrong!");
+                        MessageBox.Show("Password is wrong!", "Invalid Login credentials", MessageBoxButtons.OK,
+                        MessageBoxIcon.Error);
                     }
                     else
                     {
-                        MessageBox.Show($"Welcome {getUser.name}!", "Successful Login");
+                        MessageBox.Show($"Welcome {getUser.name}!", "Successful Login", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         if (getUser.User_Type.userTypeName == "Admin")
                         {
                             this.Hide();
@@ -101,7 +104,7 @@ namespace Session4
                 using (var context = new Session4Entities())
                 {
                     var values = lines[i].Split(',');
-                    var id = values[0];
+                    var id = values[0].Trim();
                     var checkIfExist = (from x in context.Users
                                         where x.userId == id
                                         select x).FirstOrDefault();
@@ -109,10 +112,10 @@ namespace Session4
                     {
                         context.Users.Add(new User()
                         {
-                            userId = values[0],
+                            userId = values[0].Trim(),
                             skillIdFK = Int32.Parse(values[1]),
-                            passwd = values[2],
-                            name = values[3],
+                            passwd = values[2].Trim(),
+                            name = values[3].Trim(),
                             userTypeIdFK = Int32.Parse(values[4])
                         });
                         context.SaveChanges();
@@ -120,6 +123,7 @@ namespace Session4
                     
                 }
             }
+            MessageBox.Show("Users added!", "Successful account creation(s)", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void timer1_Tick(object sender, EventArgs e)

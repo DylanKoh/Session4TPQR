@@ -46,6 +46,7 @@ namespace Session4
 
         private void competitorBox_Click(object sender, EventArgs e)
         {
+            competitorBox.Items.Clear();
             if (skillBox.SelectedItem == null)
             {
                 MessageBox.Show("Please select a Skill!");
@@ -55,7 +56,7 @@ namespace Session4
                 using (var context = new Session4Entities())
                 {
                     var getCompetitor = (from x in context.Users
-                                         where x.Skill.skillName == skillBox.SelectedItem.ToString()
+                                         where x.Skill.skillName == skillBox.SelectedItem.ToString() && x.User_Type.userTypeName == "Competitor"
                                          select x.name);
                     List<string> names = new List<string>();
 
