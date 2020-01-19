@@ -87,12 +87,12 @@ namespace Session4
 
         private void Login_Load(object sender, EventArgs e)
         {
-            
+
             Timer t = new Timer();
             t.Interval = 500;
             t.Tick += new EventHandler(timer1_Tick);
             TimeSpan ts = endTime.Subtract(DateTime.Now);
-            countdownTime.Text = ts.ToString("d' Days 'h' Hours 'm' Minutes 's' Seconds'");
+            countdownTime.Text = $"{ts.ToString("d' Days 'h' Hours 'm' Minutes 's' Seconds'")} till event starts!";
             t.Start(); ;
         }
 
@@ -129,7 +129,7 @@ namespace Session4
         private void timer1_Tick(object sender, EventArgs e)
         {
             TimeSpan ts = endTime.Subtract(DateTime.Now);
-            countdownTime.Text = ts.ToString("d' Days 'h' Hours 'm' Minutes 's' Seconds'");
+            countdownTime.Text = $"{ts.ToString("d' Days 'h' Hours 'm' Minutes 's' Seconds'")} till event starts!";
         }
     }
 }
