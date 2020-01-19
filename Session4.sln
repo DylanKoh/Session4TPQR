@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29613.14
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Session4", "Session4.csproj", "{11818B8D-B96E-4585-9A15-377EE81A266A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Session4-Dylan", "Session4-Dylan.csproj", "{11818B8D-B96E-4585-9A15-377EE81A266A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
