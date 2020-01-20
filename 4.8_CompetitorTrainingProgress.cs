@@ -19,6 +19,7 @@ namespace Session4
             _userID = userID;
         }
 
+        //Redirects user back to Expert Main Menu page - 4.3
         private void backBtn_Click(object sender, EventArgs e)
         {
             this.Hide();
@@ -28,6 +29,7 @@ namespace Session4
 
         private void CompetitorTrainingProgress_Load(object sender, EventArgs e)
         {
+            #region Populate the skill of the Expert that logged in
             using (var context = new Session4Entities())
             {
                 var getSkillOfExpert = (from x in context.Users
@@ -35,8 +37,15 @@ namespace Session4
                                         select x.Skill.skillName).First();
                 skillLbl.Text += getSkillOfExpert;
             }
+            #endregion
+
+            //Loads the DGV based on relevant skill
             GridRefresh();
         }
+
+        /// <summary>
+        /// Gets all competitors of the Expert skill trait and show their training progress of assigned training
+        /// </summary>
         private void GridRefresh()
         {
             dataGridView1.ColumnCount = 1;
@@ -68,7 +77,7 @@ namespace Session4
                     dataGridView1.Rows.Add(rows.ToArray());
                 }
 
-                
+                //Checks if any of the cell value is 0, then color red backcolor
                 foreach (DataGridViewRow item in dataGridView1.Rows)
                 {
                     foreach (DataGridViewColumn column in dataGridView1.Columns)
