@@ -24,6 +24,11 @@ namespace Session4
             this.Close();
         }
 
+        /// <summary>
+        /// Onload, load Skill Combo box and the Progress Combo box
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void UpdateCompetitors_Load(object sender, EventArgs e)
         {
             using (var context = new Session4Entities())
@@ -40,11 +45,20 @@ namespace Session4
             LoadProgress();
         }
 
+        /// <summary>
+        /// Repopulated everything based on new competitor filter
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void competitorBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             dataGridView1.Rows.Clear();
             GridRefresh();
         }
+
+        /// <summary>
+        /// Responsible for adding to Progress Combo box
+        /// </summary>
         private void LoadProgress()
         {
             var list = new List<string>()
@@ -54,6 +68,11 @@ namespace Session4
             progressBox.Items.AddRange(list.ToArray());
         }
 
+        /// <summary>
+        /// When combo box for competitor is clicked, load all the competitor to the Skill
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void competitorBox_Click(object sender, EventArgs e)
         {
             progressBox.Items.Clear();
@@ -82,12 +101,17 @@ namespace Session4
             }
         }
 
+        //When checked, repopulate DGV by the order of Name
         private void nameBtn_CheckedChanged(object sender, EventArgs e)
         {
             dataGridView1.Rows.Clear();
             GridRefresh();
         }
 
+        /// <summary>
+        /// When the name of the specific competitor is selected, load all of his/her
+        /// training assigned to him/her based on relevant filtering and ordering
+        /// </summary>
         private void GridRefresh()
         {
             dataGridView1.ColumnCount = 6;
@@ -168,18 +192,34 @@ namespace Session4
 
         }
 
+        /// <summary>
+        /// Order by End Date where newest is 1st, repopulate DGV
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void endDateBtn_CheckedChanged(object sender, EventArgs e)
         {
             dataGridView1.Rows.Clear();
             GridRefresh();
         }
 
+        /// <summary>
+        /// Default ordering of the DGV, repopulate DGV
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void defaultBtn_CheckedChanged(object sender, EventArgs e)
         {
             dataGridView1.Rows.Clear();
             GridRefresh();
         }
 
+        /// <summary>
+        /// When typing into the textbox for Module Name filtering, constantly query DB
+        /// and populate the DGV with data of modules that contain what is typed in the textbox
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void moduleNameBox_TextChanged(object sender, EventArgs e)
         {
             dataGridView1.Rows.Clear();
@@ -248,6 +288,11 @@ namespace Session4
 
         }
 
+        /// <summary>
+        /// Gets the relevant progress by filtering of the Module
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void progressBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             dataGridView1.Rows.Clear();
@@ -451,6 +496,12 @@ namespace Session4
 
         }
 
+        /// <summary>
+        /// Checks if value entered is valid and whether it is more than the current value.
+        /// Else errors out and revert back to current value of progress
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void dataGridView1_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
             using (var context = new Session4Entities())
@@ -488,6 +539,12 @@ namespace Session4
             }
         }
 
+        /// <summary>
+        /// Triggered when Update Button is clicked. When user's response to MessageBox is Yes,
+        /// then update all progress to DB
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void updateBtn_Click(object sender, EventArgs e)
         {
             var dl = MessageBox.Show("Are you sure you want to update progress?", "Update Progress",
@@ -513,6 +570,11 @@ namespace Session4
 
         }
 
+        /// <summary>
+        /// When selcted a new skill, clear everything till competitor is chosen from the new skill
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void skillBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             competitorBox.Items.Clear();
