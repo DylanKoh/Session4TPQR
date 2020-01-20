@@ -19,6 +19,7 @@ namespace Session4
             _userID = userID;
         }
 
+        //Redirects user back to Login page - 4.1
         private void backBtn_Click(object sender, EventArgs e)
         {
             this.Hide();
@@ -26,6 +27,7 @@ namespace Session4
             this.Close();
         }
 
+        //Redirects user to Assign Training page - 4.4
         private void assignBtn_Click(object sender, EventArgs e)
         {
             this.Hide();
@@ -33,6 +35,7 @@ namespace Session4
             this.Close();
         }
 
+        //Redirects user to Track Overall Training Progress page - 4.5
         private void button2_Click(object sender, EventArgs e)
         {
             this.Hide();
