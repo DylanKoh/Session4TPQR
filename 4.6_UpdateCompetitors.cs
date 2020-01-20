@@ -77,7 +77,7 @@ namespace Session4
                         names.Add(item);
                     }
                     competitorBox.Items.AddRange(names.ToArray());
-                    
+
                 }
             }
         }
@@ -245,7 +245,7 @@ namespace Session4
 
                 }
             }
-            
+
         }
 
         private void progressBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -316,14 +316,14 @@ namespace Session4
                     }
                 }
 
-                else if (progressBox.SelectedItem.ToString() == "In Progress") 
+                else if (progressBox.SelectedItem.ToString() == "In Progress")
                 {
-                    
+
                     if (nameBtn.Checked)
                     {
 
                         var getModulesUnderName = (from x in context.Assign_Training
-                                                   where x.userIdFK == getUserID && x.Training_Module.moduleName.Contains(moduleNameBox.Text) 
+                                                   where x.userIdFK == getUserID && x.Training_Module.moduleName.Contains(moduleNameBox.Text)
                                                    && x.progress <= 100 && x.progress > 0
                                                    orderby x.Training_Module.moduleName
                                                    select x);
@@ -424,7 +424,7 @@ namespace Session4
                     {
                         var getModulesUnderName = (from x in context.Assign_Training
                                                    where x.userIdFK == getUserID && x.Training_Module.moduleName.Contains(moduleNameBox.Text)
-                                                   && x.progress == 0 
+                                                   && x.progress == 0
                                                    orderby x.Training_Module.moduleName descending
                                                    select x);
                         foreach (var item in getModulesUnderName)
@@ -446,28 +446,45 @@ namespace Session4
                 {
                     GridRefresh();
                 }
-                
+
             }
 
         }
 
         private void dataGridView1_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
-            try
+            using (var context = new Session4Entities())
             {
-                var i = Convert.ToInt32(dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value);
-                if (i < 0 || i > 100)
+                var ID = Convert.ToInt32(dataGridView1.Rows[e.RowIndex].Cells[5].Value);
+                var getPreviousValue = (from x in context.Assign_Training
+                                        where x.trainingId == ID
+                                        select x.progress).FirstOrDefault();
+                try
                 {
-                    MessageBox.Show("Please input a valid integer between 0 - 100 inclusive!", "Invalid entry detected",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    var i = Convert.ToInt32(dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value);
+                    if (i < 0 || i > 100)
+                    {
+                        MessageBox.Show("Please input a valid integer between 0 - 100 inclusive!", "Invalid entry detected",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = 0;
+                    }
+
+                    var valueChange = Convert.ToInt32(dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value);
+                    if (valueChange < getPreviousValue || valueChange > 100)
+                    {
+                        MessageBox.Show("Please enter a valid integer between 0-100 inclusive! Progress cannot be lower than previous value!", "Invalid input detected",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = getPreviousValue;
+                    }
+
+
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("Please input a valid positive integer!", "Invalid entry detected",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
                     dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = 0;
                 }
-            }
-            catch (Exception)
-            {
-                MessageBox.Show("Please input a valid positive integer!", "Invalid entry detected",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
-                dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = 0;
             }
         }
 
@@ -491,9 +508,9 @@ namespace Session4
                 }
                 MessageBox.Show("Update successful!", "Update", MessageBoxButtons.OK,
                     MessageBoxIcon.Information);
-                
+
             }
-            
+
         }
 
         private void skillBox_SelectedIndexChanged(object sender, EventArgs e)
