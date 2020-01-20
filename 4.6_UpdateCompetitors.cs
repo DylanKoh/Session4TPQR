@@ -17,6 +17,7 @@ namespace Session4
             InitializeComponent();
         }
 
+        //Redirects user back to Login page - 4.1
         private void backBtn_Click(object sender, EventArgs e)
         {
             this.Hide();

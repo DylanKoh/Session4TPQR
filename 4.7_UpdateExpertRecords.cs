@@ -19,6 +19,7 @@ namespace Session4
             _userID = userID;
         }
 
+        //Redirects user back to Expert Main Menu page - 4.3
         private void backBtn_Click(object sender, EventArgs e)
         {
             this.Hide();
@@ -26,6 +27,11 @@ namespace Session4
             this.Close();
         }
 
+        /// <summary>
+        /// On selecting new Expert Name, clear the grid and refresh to get the Expert's Training assigned to him/her
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void expertNameBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             dataGridView1.Rows.Clear();
@@ -36,6 +42,7 @@ namespace Session4
         {
             using (var context = new Session4Entities())
             {
+                #region Populating Skill Combo box
                 var getSkill = (from x in context.Skills
                                 select x.skillName);
                 HashSet<string> skill = new HashSet<string>();
@@ -44,12 +51,19 @@ namespace Session4
                     skill.Add(item);
                 }
                 skillBox.Items.AddRange(skill.ToArray());
+                #endregion
             }
         }
 
+        /// <summary>
+        /// When clicking on Expert Name Combo box, load all expert based on selected skill
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void expertNameBox_Click(object sender, EventArgs e)
         {
             expertNameBox.Items.Clear();
+            //If skill is not selected, prompts user to select a skill first
             if (skillBox.SelectedItem == null)
             {
                 MessageBox.Show("Please select a Skill!", "No skill detected!", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -73,6 +87,9 @@ namespace Session4
             }
         }
 
+        /// <summary>
+        /// Responsible in inserting data to DGV and ordering/filtering by relevant orderby and filters selected
+        /// </summary>
         private void GridRefresh()
         {
             dataGridView1.ColumnCount = 6;
@@ -151,14 +168,19 @@ namespace Session4
                     
 
                 }
+
+                //Run through every row and check time between now and estimated end date.
                 foreach (DataGridViewRow item in dataGridView1.Rows)
                 {
                     var now = DateTime.Now;
                     var estimatedDate = Convert.ToDateTime(item.Cells[3].Value);
+
+                    //If time is <= 14 but > 5, color row yellow
                     if ((estimatedDate - now).TotalDays <= 14 && (estimatedDate - now).TotalDays > 5)
                     {
                         item.DefaultCellStyle.BackColor = Color.Yellow;
                     }
+                    //If time is < 5, color row red
                     else if ((estimatedDate - now).TotalDays <= 5)
                     {
                         item.DefaultCellStyle.BackColor = Color.Red;
@@ -167,18 +189,33 @@ namespace Session4
             }
         }
 
+        /// <summary>
+        /// Reorders grid by Name ascending
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void nameBtn_CheckedChanged(object sender, EventArgs e)
         {
             dataGridView1.Rows.Clear();
             GridRefresh();
         }
 
+        /// <summary>
+        /// Reorders grid by Progress descending
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void progressBtn_CheckedChanged(object sender, EventArgs e)
         {
             dataGridView1.Rows.Clear();
             GridRefresh();
         }
 
+        /// <summary>
+        /// Everytime value of progress is changed, runs the VadCheck in this method
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void dataGridView1_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
             using (var context = new Session4Entities())
@@ -190,6 +227,7 @@ namespace Session4
                 try
                 {
                     var valueChange = Convert.ToInt32(dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value);
+                    //Checks if value is valid or value is more than currrent progress. Else, error out and set value back to current progress
                     if (valueChange < getPreviousValue || valueChange > 100)
                     {
                         MessageBox.Show("Please enter a valid integer between 0-100 inclusive! Progress cannot be lower than previous value!", "Invalid input detected",
@@ -206,10 +244,16 @@ namespace Session4
             }
         }
 
+        /// <summary>
+        /// Triggered when Update button is clicked
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void updateBtn_Click(object sender, EventArgs e)
         {
             var dl = MessageBox.Show("Are you sure you want to update?", "Update Progress",
                 MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            //If user response is Yes, update progress to DB
             if (dl == DialogResult.Yes)
             {
                 using (var context = new Session4Entities())
