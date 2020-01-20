@@ -19,6 +19,7 @@ namespace Session4
             _userID = userId;
         }
 
+        //Redirects user back to Login page - 4.1
         private void backBtn_Click(object sender, EventArgs e)
         {
             this.Hide();
@@ -26,14 +27,16 @@ namespace Session4
             this.Close();
         }
 
-        private void assignBtn_Click(object sender, EventArgs e)
+        //Redirects user to Update Expert Records page - 4.7
+        private void updateExpertRecordsBtn_Click(object sender, EventArgs e)
         {
             this.Hide();
             (new UpdateExpertRecords(_userID)).ShowDialog();
             this.Close();
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        //Redirects user to Competitors Training Progress - 4.8
+        private void trackBtn_Click(object sender, EventArgs e)
         {
             this.Hide();
             (new CompetitorTrainingProgress(_userID)).ShowDialog();
