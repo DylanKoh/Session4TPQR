@@ -19,6 +19,7 @@ namespace Session4
             _userID = userID;
         }
 
+        //Redirects user back to Admin Main Menu - 4.2
         private void backBtn_Click(object sender, EventArgs e)
         {
             this.Hide();
@@ -30,6 +31,7 @@ namespace Session4
         {
             using (var context = new Session4Entities())
             {
+                #region Populate Skill Combo Box
                 var getSkills = (from x in context.Skills
                                  select x.skillName);
                 HashSet<string> skills = new HashSet<string>();
@@ -38,9 +40,15 @@ namespace Session4
                     skills.Add(item);
                 }
                 skillBox.Items.AddRange(skills.ToArray());
+                #endregion
             }
         }
 
+        /// <summary>
+        /// When the skill is changed, clear everything and reload and repopulate everything
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void skillBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             NumberList.Rows.Clear();
@@ -51,6 +59,10 @@ namespace Session4
             GridRefresh();
             
         }
+
+        /// <summary>
+        /// This method encompasses the filling of all the DGVs and the Bar Chart
+        /// </summary>
         private void GridRefresh()
         {
 
@@ -230,6 +242,8 @@ namespace Session4
                 statusCompetitorsList.Rows.Add(row2StatusCompetitor.ToArray());
                 statusCompetitorsList.Rows.Add(row3StatusCompetitor.ToArray());
                 #endregion
+
+                //Set Y axis title of Bar Chart
                 chart1.ChartAreas[0].AxisY.Title = "Number of Competitors";
                 #region Load Chart
                 foreach (DataGridViewRow rows in statusCompetitorsList.Rows)
@@ -237,6 +251,7 @@ namespace Session4
                     chart1.Series.Add(rows.Cells[0].Value.ToString());
                     foreach (DataGridViewColumn columns in statusCompetitorsList.Columns)
                     {
+                        //Skip the first Column Index as it is not a data
                         if (columns.Index == 0) continue;
                         var point = statusCompetitorsList.Rows[rows.Index].Cells[columns.Index].Value;
                         chart1.Series[$"{rows.Cells[0].Value.ToString()}"].Points.AddXY(columns.HeaderText, point);
