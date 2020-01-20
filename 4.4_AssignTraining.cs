@@ -23,6 +23,7 @@ namespace Session4
         {
             using (var context = new Session4Entities())
             {
+                #region Populating Skill Combo Box
                 var getSkills = (from x in context.Skills
                                  select x.skillName);
                 HashSet<string> skills = new HashSet<string>();
@@ -31,7 +32,9 @@ namespace Session4
                     skills.Add(item);
                 }
                 skillBox.Items.AddRange(skills.ToArray());
+                #endregion
 
+                #region Populating Category Combo box
                 HashSet<string> category = new HashSet<string>();
                 var getCategory = (from x in context.User_Type
                                    select x.userTypeName);
@@ -45,6 +48,9 @@ namespace Session4
 
                 }
                 categoryBox.Items.AddRange(category.ToArray());
+                #endregion
+
+                //Initial loading of DGV if DB has records of assigned trainings
                 GridRefresh();
 
 
@@ -54,6 +60,7 @@ namespace Session4
 
         }
 
+        //Redirects user back to Admin Main Menu page - 4.2
         private void backBtn_Click(object sender, EventArgs e)
         {
             this.Hide();
@@ -66,6 +73,10 @@ namespace Session4
 
 
         }
+
+        /// <summary>
+        /// This method loads data in from DB into DGV if there is a record of Assigned Training that exist
+        /// </summary>
         private void GridRefresh()
         {
             dataGridView1.ColumnCount = 5;
@@ -95,11 +106,17 @@ namespace Session4
             }
         }
 
+        /// <summary>
+        /// When the Combo Box for Module is clicked, this code runs
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void moduleBox_Click(object sender, EventArgs e)
         {
             moduleBox.Items.Clear();
             using (var context = new Session4Entities())
             {
+                //Checks if Skill and Category is selected
                 if (skillBox.SelectedItem != null && categoryBox.SelectedItem != null)
                 {
                     var getTypeID = (from x in context.User_Type
@@ -114,6 +131,8 @@ namespace Session4
                     var getModule = (from x in context.Training_Module
                                      where x.skillIdFK == getSkillID && x.userTypeIdFK == getTypeID
                                      select x);
+
+                    ///Checks if DB have the modules assigned. If not, add to the Module Combo box
                     foreach (var item in getModule)
                     {
                         var checkTraining = (from x in context.Assign_Training
@@ -125,6 +144,7 @@ namespace Session4
                     }
                     moduleBox.Items.AddRange(module.ToArray());
 
+                    ///Check if DGV contains the module that has assigned then deleting the relevant module from the relevant skill and category
                     foreach (DataGridViewRow item in dataGridView1.Rows)
                     {
                         var moduleID = Convert.ToInt32(item.Cells[3].Value);
@@ -134,6 +154,7 @@ namespace Session4
                         moduleBox.Items.Remove(checkModules);
                     }
                 }
+
                 else
                 {
                     MessageBox.Show("Please select a skill and Trainee Catergory!");
@@ -142,6 +163,11 @@ namespace Session4
             }
         }
 
+        /// <summary>
+        /// Triggered when Add button is clicked
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void addBtn_Click(object sender, EventArgs e)
         {
             using (var context = new Session4Entities())
@@ -149,6 +175,7 @@ namespace Session4
                 var checkDuration = (from x in context.Training_Module
                                      where x.moduleName == moduleBox.SelectedItem.ToString()
                                      select x.durationDays).First();
+                ///Check if duration from start date, whether it is after Competiton or will it overrun to or over Competiton date
                 if (dateTimePicker1.Value > DateTime.Parse("26/7/2020") || dateTimePicker1.Value.AddDays(checkDuration) >= DateTime.Parse("26/7/2020"))
                 {
                     MessageBox.Show("Cannot add if start date is after competition or duration will run into competition date!", "Invalid start date",
@@ -176,14 +203,21 @@ namespace Session4
             }
         }
 
+        /// <summary>
+        /// Triggered when Remove button is clicked
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void removeBtn_Click(object sender, EventArgs e)
         {
+            //Check if there is even any rows selected
             if (dataGridView1.CurrentRow == null)
             {
                 MessageBox.Show("Please select a record to delete!");
             }
             else
             {
+                ///Removes training from DB, then adds the mopdule back to Combo box
                 using (var context = new Session4Entities())
                 {
                     var moduleID = Convert.ToInt32(dataGridView1.CurrentRow.Cells[3].Value);
@@ -208,6 +242,12 @@ namespace Session4
             }
         }
 
+        /// <summary>
+        /// Triggered when the Add button is clicked. Checks if training is assigned already in DB, else assign training
+        /// to all of the category's and skill's participants
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void assignBtn_Click(object sender, EventArgs e)
         {
             using (var context = new Session4Entities())
@@ -259,11 +299,21 @@ namespace Session4
             this.Close();
         }
 
+        /// <summary>
+        /// Whenever skill is changed, clear the module box selected item
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void skillBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             moduleBox.Items.Clear();
         }
 
+        /// <summary>
+        /// Whenever the category is changed, clear the module box selected item
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void categoryBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             moduleBox.Items.Clear();
